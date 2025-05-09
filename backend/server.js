@@ -4,11 +4,9 @@ const mysql = require('mysql2');
 const app = express();
 const PORT = 5000;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// MySQL connection setup (XAMPP default)
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -25,7 +23,6 @@ db.connect((err) => {
 });
 
 
-// Route: Get ALL COR rows
 app.get('/cor', (req, res) => {
   const sql = 'SELECT * FROM certificate_of_registration';
   db.query(sql, (err, results) => {
@@ -38,7 +35,6 @@ app.get('/cor', (req, res) => {
 });
 
 
-// Route: Get COR by student number (e.g. /cor/224-03137M)
 app.get('/cor/:student_no', (req, res) => {
   const { student_no } = req.params;
   const sql = 'SELECT * FROM certificate_of_registration WHERE student_no = ?';
@@ -52,7 +48,6 @@ app.get('/cor/:student_no', (req, res) => {
 });
 
 
-// Route: Get COR by registration number (e.g. /cor/byreg/REG-001)
 app.get('/cor/byreg/:registration_no', (req, res) => {
   const { registration_no } = req.params;
   const sql = 'SELECT * FROM certificate_of_registration WHERE registration_no = ?';
@@ -66,7 +61,6 @@ app.get('/cor/byreg/:registration_no', (req, res) => {
 });
 
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running at: http://localhost:${PORT}`);
 });
